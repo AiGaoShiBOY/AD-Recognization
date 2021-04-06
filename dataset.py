@@ -3,7 +3,7 @@ import readData
 from torch.utils.data import DataLoader,Dataset
 import torch
 from torchvision import transforms
-import SimpleITK assitk
+import SimpleITK as sitk
 
 train_transform = transforms.Compose([
     transforms.Resize((224, 224)),
@@ -22,7 +22,6 @@ class ADSet(Dataset):
         path = self.path_list[index]
         img = sitk.ReadImage(path)
         image = sitk.GetArrayFromImage(img)
-        (224,224, )
         if self.transform:
             img = self.transform(img)
 

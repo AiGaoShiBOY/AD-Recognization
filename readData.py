@@ -4,7 +4,7 @@ from datetime import datetime
 import os
 import re
 
-file_name = 'ADNI1_Annual_2_Yr_3T_3_31_2021.csv'
+file_name = 'ADNI1_Baseline_3T_4_05_2021.csv'
 
 data_list = []
 label_list = []
@@ -24,7 +24,7 @@ with open(file_name) as f:
         # 进入子目录
         # 首先获取根目录
         root = os.getcwd()
-        route = 'ADNI 4/' + name + '/' + method
+        route = 'ADNI/' + name + '/' + method
         route1 = os.path.join(root, route)
         # 对于每个病人，遍历他的对应方法的文件夹
         for dirname in os.listdir(route1):

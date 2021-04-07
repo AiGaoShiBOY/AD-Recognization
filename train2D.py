@@ -28,7 +28,7 @@ train_transform = transforms.Compose([
 
 batch_size = 16
 
-train_set = ADSet(transform=train_transform)
+train_set = ADSet(transform=train_transformations)
 
 validation_split = .2
 shuffle_dataset = True

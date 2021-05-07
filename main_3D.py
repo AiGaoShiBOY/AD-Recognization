@@ -10,13 +10,15 @@ import torchvision
 from torchvision.transforms import transforms
 from torch.optim import Adam
 from torch.autograd import Variable
-from dataset import ADSet
+from dataset3D import ADSet
+from dataset2DRandomslice import SliceSet2D
 import torch.nn.functional as F
 import numpy as np
 import time
 import model
 import utils
 import config
+from torchvision import transforms
 
 
 
@@ -63,7 +65,7 @@ def train_model(model, train_loader, epoch, num_epochs, optimizer, current_lr, l
     return train_loss_epoch, metric_collects
 
 
-def evaluate_model(model, val_loader, epoch, num_epochs, current_lr, log_every=20):
+def evaluate_model(model, val_loader, epoch, num_epochs, current_lr):
     n_classes = model.n_classes
     metric = torch.nn.CrossEntropyLoss()
 
@@ -110,8 +112,11 @@ def main(args):
     model_dir = os.path.join(exp_dir, 'models')
     os.makedirs(model_dir, exist_ok=True)
 
+
     batch_size = args.batch_size
-    train_set = ADSet()
+    train_set = SliceSet2D()
+
+
 
     validation_split = .4
     shuffle_dataset = True
@@ -129,6 +134,7 @@ def main(args):
     # Creating data samplers and loaders:
     train_sampler = SubsetRandomSampler(train_indices)
     valid_sampler = SubsetRandomSampler(val_indices)
+
 
     train_loader = torch.utils.data.DataLoader(train_set, batch_size=batch_size,
                                                sampler=train_sampler)
@@ -169,7 +175,6 @@ def main(args):
         train_loss, train_metric = train_model(
             cov_net, train_loader, epoch, epochs, optimizer,
             current_lr, 100)
-
 
         with torch.no_grad():
             val_loss, val_metric = evaluate_model(

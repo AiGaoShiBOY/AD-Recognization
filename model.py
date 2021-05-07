@@ -3,6 +3,7 @@ import torch.nn as nn
 from torchvision import models
 
 
+
 class COVNet(nn.Module):
     def __init__(self, n_classes):
         super().__init__()

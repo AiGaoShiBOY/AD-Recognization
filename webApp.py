@@ -1,6 +1,7 @@
 import streamlit as st
 from PIL import Image
 import SimpleITK as sitk
+import prediction
 
 # -- Page setting
 st.set_page_config(
@@ -63,6 +64,7 @@ def num_to_result(num):
 
 
 if classify:
+    result = prediction.predictData(data_path, pre_select, model_select)
     result = 0
     st.write(num_to_result(result))
 else:

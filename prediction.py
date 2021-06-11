@@ -9,7 +9,7 @@ import scipy.ndimage
 
 
 def predictData(data_path, pre_select, model_select):
-    model = tf.keras.models.load_model("./model.h5", compile=True)
+    model = tf.keras.models.load_model("./model/model.h5", compile=True)
 
     itk_img = sitk.ReadImage(data_path)
     img = sitk.GetArrayFromImage(itk_img)
@@ -22,5 +22,6 @@ def predictData(data_path, pre_select, model_select):
             for r in range(128):
                 predict_x[0, q, r, p, 0] = Resampledimg[p, q, r] / 255
 
-    model.predict(predict_x)
-    return model.predict(predict_x)
+    res = model.predict(predict_x)
+    index = np.argmax(res)
+    return index

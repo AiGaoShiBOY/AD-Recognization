@@ -11,11 +11,11 @@ st.set_page_config(
 # -- Sidebar setting
 sample = st.sidebar.radio("Pick a sample", ("Upload Sample", "Sample 1", "Sample 2", "Sample 3"))
 if sample == "Sample 1":
-    path = 'F:\\SSE2021Spring\\AD-2D\\AD-Recognization-main\\AD-Recognization-main\\ADNI\\018_S_0633\\MPR____N3__Scaled\\2006-07-17_11_06_31.0\\S16900\\ADNI_018_S_0633_MR_MPR____N3__Scaled_Br_20070101223315779_S16900_I35039.nii'
+    path = './data/0.nii'
 elif sample == "Sample 2":
-    path = 'F:\\SSE2021Spring\\AD-2D\\AD-Recognization-main\\AD-Recognization-main\\ADNI\\018_S_0633\\MPR____N3__Scaled\\2006-07-17_11_06_31.0\\S16900\\ADNI_018_S_0633_MR_MPR____N3__Scaled_Br_20070101223315779_S16900_I35039.nii'
+    path = './data/1.nii'
 elif sample == "Sample 3":
-    path = 'F:\\SSE2021Spring\\AD-2D\\AD-Recognization-main\\AD-Recognization-main\\ADNI\\018_S_0633\\MPR____N3__Scaled\\2006-07-17_11_06_31.0\\S16900\\ADNI_018_S_0633_MR_MPR____N3__Scaled_Br_20070101223315779_S16900_I35039.nii'
+    path = './data/2.nii'
 else:
     path = ''
 data_path = st.sidebar.text_input("Source root for testing data ?")
@@ -25,7 +25,7 @@ pre_select = st.sidebar.selectbox(
 )
 model_select = st.sidebar.selectbox(
     "Which model would you like to choose ?",
-    ("CN", "AD", "MCI")
+    ("2D model", "3D model", "resnet")
 )
 
 # -- Prediction
@@ -55,17 +55,15 @@ else:
 
 def num_to_result(num):
     numbers = {
-        0: "Normal identified",
         1: "AD identified",
-        2: "CN identified",
-        3: "MCI identified"
+        0: "CN identified",
+        2: "MCI identified"
     }
     return numbers.get(num, None)
 
 
 if classify:
     result = prediction.predictData(data_path, pre_select, model_select)
-    result = 0
     st.write(num_to_result(result))
 else:
     st.write('Standing by')

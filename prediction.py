@@ -8,7 +8,7 @@ import scipy
 import scipy.ndimage
 
 
-def predictData(data_path, pre_select, model_select):
+def predictData(data_path, model_select):
     model = tf.keras.models.load_model("./model/model.h5", compile=True)
 
     itk_img = sitk.ReadImage(data_path)

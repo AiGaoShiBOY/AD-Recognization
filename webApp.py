@@ -18,15 +18,13 @@ elif sample == "Sample 3":
     path = './data/2.nii'
 else:
     path = ''
-data_path = st.sidebar.text_input("Source root for testing data ?")
-pre_select = st.sidebar.selectbox(
-    "Which pretreatment would you like to conduct ?",
-    ("binaryzation", "AD", "MCI")
-)
-model_select = st.sidebar.selectbox(
-    "Which model would you like to choose ?",
-    ("2D model", "3D model", "resnet")
-)
+    data_path = st.sidebar.text_input("Source root for testing data ?")
+
+mod_select = st.sidebar.radio("Choose a model", ("Upload model", "3D model"))
+if mod_select == "Upload model":
+    mod = st.sidebar.text_input("Source root for model ?")
+else:
+    mod = "./model/model.h5"
 
 # -- Prediction
 classify = False
@@ -39,6 +37,8 @@ st.markdown("""
 st.subheader("Prediction")
 if sample != "Upload Sample":
     data_path = path
+if mod_select != "Upload model":
+    mod_path = mod
 if not data_path:
     st.write("Input source root for testing data to continue")
 else:
@@ -63,7 +63,7 @@ def num_to_result(num):
 
 
 if classify:
-    result = prediction.predictData(data_path, pre_select, model_select)
+    result = prediction.predictData(data_path, mod_path)
     st.write(num_to_result(result))
 else:
     st.write('Standing by')
